@@ -4,15 +4,18 @@
 
 .app {
   width: 100%;
-  height: 110vh;
+  height: 100%;
+  min-height: 100vh;
   position: relative;
   background-color: rgba(0, 0, 0, 0, 4);
   color: aliceblue;
 }
 .app:before {
   content: "";
-  background: url("./assets/ubg1.jpg") no-repeat center center/cover;
-
+  background-image:    url("./assets/ubg1.jpg");
+  background-size:     cover;                      
+  background-repeat:   no-repeat;
+  background-position: center center; 
   position: absolute;
   width: 100%;
   height: 100%;
@@ -60,6 +63,7 @@
   text-align: center;
   padding: 4rem;
   justify-content: center;
+
 }
 .app input {
   padding: 0.7rem 1.5rem;
@@ -103,4 +107,36 @@ option{
   .container {
     max-width: 700px !important;
   }
+}
+
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #faf9f9; /* Light grey */
+  border-top: 5px solid #a446fc; /* Blue */
+  border-radius: 50%;
+  animation: spinner 1.5s linear infinite;
+  position: absolute;
+  top: 45%;
+  right: 50%;
+}
+
+.spinner-container {
+  position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #979494;
+    opacity: 0.4;
+    z-index: 1000;
 }

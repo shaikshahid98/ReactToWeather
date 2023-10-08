@@ -6,21 +6,14 @@ import WeatherDetails from "./WeatherDetails";
 import img from '../assets/ubg1.jpg'
 import SelectComponent from "./SelectComponent";
 import Button from "../util/Button";
+import { useSafeMantineTheme } from "@mantine/core";
+import Loader from "./Loader";
 
 
 export default function Home() {
-  const [weather, setWeather] = useState(
-    {
-      city: 'Hyderabad'
-      ,
-      temp : '32',
-      descp : "Test sescription",
-      humidity : "3",
-      wind: "10",
-      feel : "20"
-    }
-  );
-  const apiKey = "bc2e7f18c0de46b5ac364540230810";  //api removed for security reasons(find api key info from readme.md )
+  const [weather, setWeather] = useState(null)
+  const [loading,setLoading]  = useState(false);
+  const apiKey = "";  //api removed for security reasons(find api key info from readme.md )
   const [units, setUnits] = useState("metric");
   const [inputType, setInputType] = useState("city");
 
@@ -40,6 +33,7 @@ export default function Home() {
 
    // Function to fetch weather data
   const fetchWeatherData = async (loc, lat, lon, units) => {
+    setLoading(true);
     let url;
     if (loc) {
       url = `https://api.openweathermap.org/data/2.5/weather?q=${loc}&appid=${apiKey}&units=${units}`;
@@ -57,8 +51,10 @@ export default function Home() {
         wind: res.data.wind.speed,
         feel: res.data.main.feels_like,
       };
+      setLoading(false);
     } catch (error) {
       console.error("Error occurred while fetching API data.");
+      setLoading(false);
       throw error;
     }
   };
@@ -117,10 +113,10 @@ export default function Home() {
   const handleUnitChange = (selectedUnit) => {
     updateWeatherData(selectedUnit);
   };
-
+  
   return (
-     //On clicking the button of GetWeather the api gets called and fetched and data is displayed.
-    <div className="app">
+    <>
+   <div className="app">
       <div className="search">
         <form onSubmit={apiCall}>
           <div className="flex justify-center">
@@ -140,8 +136,6 @@ export default function Home() {
 
           <Button text={"Get Weather"} />
         </form>
-        
-
         {weather && (
           <WeatherDetails
             units={units}
@@ -150,7 +144,9 @@ export default function Home() {
             renderTemperature={renderTemperature}
           />
         )}
+     { loading && <Loader />}
       </div>
     </div>
+      </>
   );
 }
