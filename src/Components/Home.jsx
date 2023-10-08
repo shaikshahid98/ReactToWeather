@@ -3,11 +3,24 @@ import { useState, useEffect } from "react";
 import "../index.css";
 import axios from "axios";
 import WeatherDetails from "./WeatherDetails";
+import img from '../assets/ubg1.jpg'
+import SelectComponent from "./SelectComponent";
+import Button from "../util/Button";
 
 
 export default function Home() {
-  const [weather, setWeather] = useState(null);
-  const apiKey = "Your API Key";  //api removed for security reasons(find api key info from readme.md )
+  const [weather, setWeather] = useState(
+    {
+      city: 'Hyderabad'
+      ,
+      temp : '32',
+      descp : "Test sescription",
+      humidity : "3",
+      wind: "10",
+      feel : "20"
+    }
+  );
+  const apiKey = "bc2e7f18c0de46b5ac364540230810";  //api removed for security reasons(find api key info from readme.md )
   const [units, setUnits] = useState("metric");
   const [inputType, setInputType] = useState("city");
 
@@ -110,28 +123,24 @@ export default function Home() {
     <div className="app">
       <div className="search">
         <form onSubmit={apiCall}>
-          <select
-            onChange={handleInputTypeChange}
-            className="dropdown-menu"
-            value={inputType}
-          >
-            <option value="city">Enter City</option>
-            <option value="coordinates">Enter Latitude and Longitude</option>
-          </select>
+          <div className="flex justify-center">
+            <SelectComponent inputType = {inputType} handleInputTypeChange = {handleInputTypeChange} />
+          </div>
 
           {inputType === "city" ? (
             <input type="text" placeholder="Enter your city" name="loc" />
           ) : (
-            <>
+            <div className="flex 
+             flex-col justify-center space-y-7
+            md:flex-row md:space-x-5 md:space-y-0">
               <input type="text" placeholder="Enter latitude" name="lat" />
               <input type="text" placeholder="Enter longitude" name="lon" />
-            </>
+            </div>
           )}
 
-          <button className=" ml-4 px-8 py-2.5 mt-4 transition-all ease-in duration-75 bg-gradient-to-r from-purple-950 from-20% via-purple-900 via-60% to-purple-800 to-80% rounded-full hover:scale-105 font-bold">
-            Get Weather
-          </button>
+          <Button text={"Get Weather"} />
         </form>
+        
 
         {weather && (
           <WeatherDetails

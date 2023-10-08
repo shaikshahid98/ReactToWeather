@@ -59,6 +59,7 @@
 .app .search {
   text-align: center;
   padding: 4rem;
+  justify-content: center;
 }
 .app input {
   padding: 0.7rem 1.5rem;

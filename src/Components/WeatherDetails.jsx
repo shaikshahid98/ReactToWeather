@@ -13,7 +13,7 @@ export default function WeatherDetails({units, handleUnitChange, weather, render
         <div className="container">
           {" "}
           <div>
-            <div className="mt-2">
+            <div className="mx-auto">
               <SegmentedControl //Converts temp from (Celsius to Kelvin or Kelvin to Celsius or etc)
                 radius="lg"
                 color="rgba(103, 9, 171, 1)"
